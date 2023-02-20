@@ -1,0 +1,17 @@
+---
+- name: execute parts of the program using Tags module
+  hosts: webservers
+  tasks:
+    - name: install the packages using with_items
+      yum: pkg= {{ item }} state=latest
+      with_items:
+        - logwatch
+        - httpd
+        - tigervnc-server
+      tags:
+        - packages
+
+    - name: verify the packages are installed
+      raw: yum list installed | grep http > /tmp/pkg.log
+      tags:
+        - verification
