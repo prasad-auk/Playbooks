@@ -1,0 +1,12 @@
+---
+- name: execute program interactively using Var_Prompt module
+  hosts: webservers
+
+  vars_prompt:
+    - name: pkgtoinstall
+      prompt: which package do you want to install ?
+      default: telnet
+
+  tasks:
+    - name: install the {{ pkgtoinstall }} package
+      yum: pkg= {{ pkgtoinstall }} state=latest
